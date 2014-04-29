@@ -38,53 +38,16 @@ function kmh2beaufort(kmh)
 
 jQuery(document).ready(function($) {
 
-	var news = [];
-	var newsIndex = 0;
-
-	var eventList = [];
-
-	var lastCompliment;
-	var compliment;
-
-
-	//connect do Xbee monitor
-	var socket = io.connect('http://rpi-development.local:8080');
-	socket.on('dishwasher', function (dishwasherReady) {
-		if (dishwasherReady) {
-			$('.dishwasher').fadeIn(2000);
-			$('.lower-third').fadeOut(2000);
-		} else {
-			$('.dishwasher').fadeOut(2000);
-			$('.lower-third').fadeIn(2000);		
-		}
-	});
-
-
 	var weatherParams = {
-		'q':'Baarn,Netherlands',
+		'q':'Hameln,Germany',
 		'units':'metric',
-		'lang':'nl'
+		'lang':'de'
 	};
 	
-	(function checkVersion()
-	{
-		$.getJSON('githash.php', {}, function(json, textStatus) {
-			if (json) {
-				if (json.gitHash != gitHash) {
-					window.location.reload();
-					window.location.href=window.location.href;
-				}
-			}
-		});
-		setTimeout(function() {
-			checkVersion();
-		}, 3000);
-	})();
-
 	(function updateTime()
 	{
-		var days = ['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];
-		var months = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+		var days = ['sonntag','montag','dienstag','mittwoch','donnerstag','freitag','samstag'];
+		var months = ['januar','februar','maerz','april','mai','juni','juli','august','september','oktober','november','dezember'];
 
 		var now = new Date();
 
@@ -102,111 +65,6 @@ jQuery(document).ready(function($) {
 		setTimeout(function() {
 			updateTime();
 		}, 1000);
-	})();
-
-	(function updateCalendarData()
-	{
-		new ical_parser("calendar.php", function(cal){
-        	events = cal.getEvents();
-        	eventList = [];
-
-        	for (var i in events) {
-        		var e = events[i];
-        		for (var key in e) {
-        			var value = e[key];
-					var seperator = key.search(';');
-					if (seperator >= 0) {
-						var mainKey = key.substring(0,seperator);
-						var subKey = key.substring(seperator+1);
-
-						var dt;
-						if (subKey == 'VALUE=DATE') {
-							//date
-							dt = new Date(value.substring(0,4), value.substring(4,6) - 1, value.substring(6,8));
-						} else {
-							//time
-							dt = new Date(value.substring(0,4), value.substring(4,6) - 1, value.substring(6,8), value.substring(9,11), value.substring(11,13), value.substring(13,15));
-						}
-
-						if (mainKey == 'DTSTART') e.startDate = dt; 
-						if (mainKey == 'DTEND') e.endDate = dt; 
-					}
-        		}
-
-
-        		var now = new Date();
-        		var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        		var days = moment(e.startDate).diff(moment(today), 'days');
-
-        		//only add fututre events
-        		if (days >= 0) {
-	        		eventList.push({'description':e.SUMMARY,'days':days});
-        		}
-        	};
-        	eventList.sort(function(a,b){return a.days-b.days});
-
-        	setTimeout(function() {
-        		updateCalendarData();
-        	}, 60000);
-    	});
-	})();
-
-	(function updateCalendar()
-	{
-		table = $('<table/>').addClass('xsmall').addClass('calendar-table');
-		opacity = 1;
-
-
-		for (var i in eventList) {
-			var e = eventList[i];
-			var days = e.days;
-
-			var daysString = (days == 1) ? 'morgen' :  days + ' dagen';
-    		if (days == 0) {
-    			daysString = 'vandaag';
-    		}
-			
-			var row = $('<tr/>').css('opacity',opacity);
-			row.append($('<td/>').html(e.description).addClass('description'));
-			row.append($('<td/>').html(daysString).addClass('days dimmed'));
-			table.append(row);
-
-			opacity -= 1 / eventList.length;
-		}
-
-		$('.calendar').updateWithText(table,1000);
-
-		setTimeout(function() {
-        	updateCalendar();
-        }, 1000);
-	})();
-
-	(function updateCompliment()
-	{
-
-		var compliments = [
-			'Hey, handsome!',
-			'Hi, sexy!',
-			'Hello, beauty!',
-			'You look sexy!',
-			'Wow, you look hot!',
-			'Looking good today!',
-			'You look nice!',
-			'Enjoy your day!'
-		];
-
-		while (compliment == lastCompliment) {
-			compliment = Math.floor(Math.random()*compliments.length);
-		}
-
-		$('.compliment').updateWithText(compliments[compliment], 4000);
-
-		lastCompliment = compliment;
-
-		setTimeout(function() {
-			updateCompliment(true);
-		}, 30000);
-
 	})();
 
 	(function updateCurrentWeather()
@@ -268,7 +126,7 @@ jQuery(document).ready(function($) {
 
 	(function updateWeatherForecast()
 	{
-			var dayAbbr = ['zo','ma','di','wo','do','vr','za'];	
+			var dayAbbr = ['so','mo','di','mi','do','fr','sa'];	
 
 			$.getJSON('http://api.openweathermap.org/data/2.5/forecast', weatherParams, function(json, textStatus) {
 
@@ -315,34 +173,4 @@ jQuery(document).ready(function($) {
 			updateWeatherForecast();
 		}, 60000);
 	})();
-
-	(function fetchNews() {
-		$.feedToJson({
-			feed:'http://feeds.nos.nl/nosjournaal?format=rss',
-			//feed:'http://www.nu.nl/feeds/rss/achterklap.rss',
-			//feed:'http://www.nu.nl/feeds/rss/opmerkelijk.rss',
-			success: function(data){
-				news = [];
-				for (var i in data.item) {
-					var item = data.item[i];
-					news.push(item.title);
-				}
-			}
-		});
-		setTimeout(function() {
-			fetchNews();
-		}, 60000);
-	})();
-
-	(function showNews() {
-		var newsItem = news[newsIndex];
-		$('.news').updateWithText(newsItem,2000);
-
-		newsIndex--;
-		if (newsIndex < 0) newsIndex = news.length - 1;
-		setTimeout(function() {
-			showNews();
-		}, 5500);
-	})();
-	
 });

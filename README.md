@@ -1,4 +1,11 @@
-MagicMirror
+smartmirror
 ===========
 
-The super magic interface of my personal Magic Mirror. More information about this project can be found on my [blog](http://michaelteeuw.nl/tagged/magicmirror).
+This is a fork of MagicMirror which aims to be used without a webserver.
+Also, it's in german.
+
+
+
+For more information on the source project, visit:
+
+(http://michaelteeuw.nl/tagged/magicmirror)
