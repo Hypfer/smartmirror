@@ -20,18 +20,18 @@
 .top
 {
 	position: absolute;
-	top: 50px;
+	top: 0px;
 }
 
 .left
 {
 	position: absolute;
-	left: 50px;
+	left: 0px;
 }
 .right
 {
 	position: absolute;
-	right: 50px;
+	right: 0px;
 	text-align: right;
 }
 
@@ -64,7 +64,7 @@
 .bottom
 {
 	position: absolute;
-	bottom: 50px;
+	bottom: 0px;
 }
 
 .xxsmall
@@ -135,8 +135,9 @@
 }
 
 .time .sec {
-	font-size: 25px;
-	color: #666;
+	
+        font-size: 25px;
+	/*color: #666;*/
 	padding-left: 5px;
 	position: relative;
 	top: -35px;
