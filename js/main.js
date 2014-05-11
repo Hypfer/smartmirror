@@ -157,12 +157,13 @@ jQuery(document).ready(function($) {
 				var dt = new Date(forecast.timestamp);
 				var row = $('<tr />').css('opacity', opacity);
 
-				row.append($('<td/>').addClass('day').html(dayAbbr[dt.getDay()]));
-				row.append($('<td/>').addClass('temp-max').html(roundVal(forecast.temp_max)));
-				row.append($('<td/>').addClass('temp-min').html(roundVal(forecast.temp_min)));
+				row.append($('<td/>').addClass('day').html(dayAbbr[dt.getDay()]).css('opacity', "0"));
+				row.append($('<td/>').addClass('temp-max').html(roundVal(forecast.temp_max)+"&deg;-"));
+				row.append($('<td/>').addClass('temp-min').html(roundVal(forecast.temp_min)+"&deg;"));
 
 				forecastTable.append(row);
 				opacity -= 0.155;
+				break;
 			}
 
 
