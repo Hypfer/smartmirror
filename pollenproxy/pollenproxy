@@ -1,0 +1,75 @@
+#!/bin/bash
+main() {
+	socat TCP4-LISTEN:1336,fork,reuseaddr EXEC:"bash /usr/local/bin/pollenproxy web" 2>1 > /dev/null &
+	echo $! > /var/run/pollenproxy.pid
+
+}
+
+
+
+web() {
+
+#Headersnstuff
+read request
+request=`echo $request | cut -d" " -f2`
+echo -e "HTTP/1.1 200 OK\nAccess-Control-Allow-Origin: *\n"
+# Everything
+case  "$request"  in
+		"/graeser")
+		graeser
+		;;
+		"/roggen")
+		roggen
+		;;
+esac
+}
+graeser() {
+datum=`date +"%Y-%m-%d"`
+graeserweb=`curl --connect-timeout 10 -s -d  "datum=$datum&plz=31785&ort=Hameln&land=31785" "http://www.allergie.hexal.de/pollenflug/vorhersage/load_pollendaten.php"| lynx -dump -stdin | egrep "ser" | cut -d"_" -f3 | cut -d"." -f1`
+case "$graeserweb" in
+        0) echo -n "0"
+            ;;
+        1) echo -n "0.6"
+            ;;
+        2) echo -n "0.8"
+            ;;
+        3) echo -n "1"
+            ;;
+        *) echo -n "0"
+            ;;
+esac
+}
+roggen() {
+datum=`date +"%Y-%m-%d"`
+roggenweb=`curl --connect-timeout 10 -s -d "datum=$datum&plz=31785&ort=Hameln&land=31785" "http://www.allergie.hexal.de/pollenflug/vorhersage/load_pollendaten.php" | lynx -dump  -stdin | egrep "Roggen" | cut -d"_" -f3 | cut -d"." -f1`
+case "$roggenweb" in
+        0) echo -n "0"
+            ;;
+        1) echo -n "0.6"
+            ;;
+        2) echo -n "0.8"
+            ;;
+        3) echo -n "1"
+            ;;
+        *) echo -n "0"
+            ;;
+esac
+}
+
+
+
+
+
+
+
+
+
+
+case  "$1"  in
+		"web")
+		web
+		;;
+		*)       
+		main
+		;;
+esac

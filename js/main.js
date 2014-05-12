@@ -174,4 +174,20 @@ jQuery(document).ready(function($) {
 			updateWeatherForecast();
 		}, 60000);
 	})();
+	(function updatePollen()
+	{
+		$.get( "http://localhost:1336/roggen", function( data ) {
+		$('.roggen').fadeTo("slow",data);
+		});
+		$.get( "http://localhost:1336/graeser", function( data ) {
+		$('.graeser').fadeTo("slow",data);
+		});
+		setTimeout(function() {
+		updatePollen();
+		}, 300000);
+		
+	
+	
+	})();
+
 });

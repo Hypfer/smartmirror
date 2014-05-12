@@ -184,6 +184,15 @@
 	border-radius: 1200px;
 	display: none;
 }
+.graeser {
+	opacity: 0.0;
+}
+.roggen {
+	overflow: hidden;
+	margin-right: 0px;
+	opacity: 0.0;
+}
+
 
 @font-face {
   font-family: 'HelveticaNeue-UltraLight';

@@ -1,0 +1,60 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:		pollenproxy
+# Required-Start:	$remote_fs
+# Required-Stop:	$remote_fs
+# Should-Start:		$network
+# Should-Stop:
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	Pollenproxy
+# Description:		Pollenproxy
+### END INIT INFO
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+NAME=Pollenproxy
+DESC="Pollenproxy"
+PIDFILE=/var/run/pollenproxy.pid
+
+
+. /lib/lsb/init-functions
+
+case "$1" in
+  start)
+	if [ -f $PIDFILE ]
+	then
+		log_daemon_msg "Pollenproxy is already running. (Or the pidfile still exists)"
+		echo ""
+		exit 0
+	fi
+	log_daemon_msg "Starting $DESC" "$NAME"
+	echo ""
+	socat TCP4-LISTEN:1336,fork,reuseaddr EXEC:"bash /usr/local/bin/pollenproxy web" 2>1 > /dev/null &
+	echo $! > $PIDFILE
+	;;
+  stop)
+	if [ -f $PIDFILE ]
+	then
+		log_daemon_msg "Stopping $DESC" "$NAME"
+		echo ""
+		kill -9 $(cat $PIDFILE) 2>&1 > /dev/null
+		rm $PIDFILE 2>&1 > /dev/null
+	else
+	log_daemon_msg "$NAME is not running"
+	echo ""
+	fi
+	;;
+  restart)
+  	$0 stop
+	sleep 8
+	$0 start
+	;;
+  *)
+	N=/etc/init.d/$NAME
+	echo "Usage: $N {start|stop|restart}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
