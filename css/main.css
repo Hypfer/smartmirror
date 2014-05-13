@@ -184,14 +184,22 @@
 	border-radius: 1200px;
 	display: none;
 }
-.graeser {
-	opacity: 0.0;
+
+.notifications {
+	float: right;
+	position:relative;
+	display: block;
+	width: 100px;
+
 }
-.roggen {
-	overflow: hidden;
-	margin-right: 0px;
-	opacity: 0.0;
-}
+
+
+
+
+
+
+
+
 
 
 @font-face {

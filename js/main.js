@@ -177,10 +177,24 @@ jQuery(document).ready(function($) {
 	(function updatePollen()
 	{
 		$.get( "http://localhost:1336/roggen", function( data ) {
-		$('.roggen').fadeTo("slow",data);
+		if(data != 0) {
+			if ($("#roggen").length <= 0){
+				$( ".notifications" ).append( '<img src="font/roggen.svg" id="roggen" style="opacity: '+ data + ';">' );
+			}
+		}
+		else {
+			$( "#roggen" ).remove();
+		}
 		});
 		$.get( "http://localhost:1336/graeser", function( data ) {
-		$('.graeser').fadeTo("slow",data);
+		if(data != 0) {
+			if ($("#graeser").length <= 0){
+				$( ".notifications" ).append( '<img src="font/graeser.svg" id="graeser" style="opacity: '+ data + ';">' );
+			}
+		}
+		else {
+			$( "#graeser" ).remove();
+		}
 		});
 		setTimeout(function() {
 		updatePollen();
