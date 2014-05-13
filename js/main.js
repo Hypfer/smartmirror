@@ -102,6 +102,14 @@ jQuery(document).ready(function($) {
 			var iconClass = iconTable[json.weather[0].icon];
 			var icon = $('<span/>').addClass('icon').addClass('wi').addClass(iconClass);
 			$('.temp').updateWithText(icon.outerHTML()+temp+'&deg;', 1000);
+			if(parseFloat(temp) <= 4) {
+				if ($("#glaette").length <= 0){
+					$( ".notifications" ).append( '<img src="font/snowflake.svg" id="glaette">' );
+				}
+			}
+			else {
+				$( "#glaette" ).remove();
+			}
 
 			// var forecast = 'Min: '+temp_min+'&deg;, Max: '+temp_max+'&deg;';
 			// $('.forecast').updateWithText(forecast, 1000);
