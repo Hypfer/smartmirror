@@ -9,7 +9,7 @@ Icons taken from
 http://thenounproject.com/term/agriculture/4221/
 http://thenounproject.com/term/grass/18888/
 http://thenounproject.com/term/snowflake/30004/
-
+http://thenounproject.com/term/umbrella/9933/
 
 
 For more information on the source project, visit:

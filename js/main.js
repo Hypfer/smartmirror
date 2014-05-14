@@ -180,8 +180,28 @@ jQuery(document).ready(function($) {
 
 		setTimeout(function() {
 			updateWeatherForecast();
-		}, 60000);
+		}, 300000);
 	})();
+	(function updateDailyForecast()
+	{
+			$.getJSON('http://api.openweathermap.org/data/2.5/forecast/daily', weatherParams, function(json, textStatus) {
+
+			if(json.list[0].weather[0].main == "Rain"){
+				if ($("#rain").length <= 0){
+					$( ".notifications" ).append( '<img src="font/rain.svg" id="rain">' );
+				}
+			}
+			else {
+				$( "#rain" ).remove();
+			}
+
+		});
+
+		setTimeout(function() {
+			updateDailyForecast();
+		}, 300000);
+	})();
+
 	(function updatePollen()
 	{
 		$.get( "http://localhost:1336/roggen", function( data ) {
