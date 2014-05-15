@@ -201,7 +201,18 @@ jQuery(document).ready(function($) {
 			updateDailyForecast();
 		}, 300000);
 	})();
+	(function updateMoney()
+	{
+	
+		
+		$.get( "http://localhost:1336/banking", function( data ) {
+			$( "#Kontostand" ).html(data + ' &euro;');
+		});
 
+		setTimeout(function() {
+			updateMoney();
+		}, 300000);
+	})();
 	(function updatePollen()
 	{
 		$.get( "http://localhost:1336/roggen", function( data ) {

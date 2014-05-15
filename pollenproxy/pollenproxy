@@ -21,6 +21,9 @@ case  "$request"  in
 		"/roggen")
 		roggen
 		;;
+		"/banking")
+		banking
+		;;
 esac
 }
 graeser() {
@@ -55,7 +58,20 @@ case "$roggenweb" in
             ;;
 esac
 }
+banking() {
 
+banking=`aqbanking-cli -D /path/to/.aqbanking/ -P /path/to/pinfile request --balance -a kontonummer 2>/dev/null | grep "value=" | tail -n2 | head -n1 | cut -d'"' -f2 | cut -d"%" -f1`
+
+
+vor=${banking%??}
+nach=${banking: -2}
+
+result=$vor
+result+="."
+result+=$nach
+
+echo $result
+}
 
 
 
