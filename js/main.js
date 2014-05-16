@@ -76,7 +76,7 @@ jQuery(document).ready(function($) {
 
 				var now = new Date();
 				var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-				var days = moment(theDate).diff(moment(now), 'days');
+				var days = moment(theDate).diff(moment(today), 'days');
 				if(days == 0) {
 					daystext="Heute";
 				}
