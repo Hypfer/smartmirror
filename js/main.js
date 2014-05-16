@@ -67,6 +67,41 @@ jQuery(document).ready(function($) {
 		}, 1000);
 	})();
 
+	(function updateCalendarData()
+	{
+		var eventName = '';
+		$.getJSON('http://localhost:1336/calendar',function(data){
+			for(var i = 0; i < data.feed.entry.length; i++){
+				var theDate = new Date(data.feed.entry[i].gd$when[0].startTime);
+
+				var now = new Date();
+				var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+				var days = moment(theDate).diff(moment(now), 'days');
+				if(days == 0) {
+					daystext="Heute";
+				}
+				else if(days == 1){
+					daystext="Morgen";          
+				}
+				else {
+					daystext="In "+days+" Tagen";
+				}	
+				eventName += data.feed.entry[i].title.$t+" | "+daystext;
+			}
+			$('#nextAppointment').html(eventName);
+			});
+		
+        	setTimeout(function() {
+        		updateCalendarData();
+        	}, 300000);
+
+	})();
+
+
+
+
+
+
 	(function updateCurrentWeather()
 	{
 		var iconTable = {

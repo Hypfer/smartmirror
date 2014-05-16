@@ -24,6 +24,9 @@ case  "$request"  in
 		"/banking")
 		banking
 		;;
+		"/calendar")
+		calendar
+		;;
 esac
 }
 graeser() {
@@ -62,7 +65,6 @@ banking() {
 
 banking=`aqbanking-cli -D /path/to/.aqbanking/ -P /path/to/pinfile request --balance -a kontonummer 2>/dev/null | grep "value=" | tail -n2 | head -n1 | cut -d'"' -f2 | cut -d"%" -f1`
 
-
 vor=${banking%??}
 nach=${banking: -2}
 
@@ -72,8 +74,12 @@ result+=$nach
 
 echo $result
 }
+calendar() {
 
-
+#GCAL Only
+datum=`date +"%Y-%m-%d"`
+wget -qO - "https://www.google.com/calendar/feeds/yourgmailadress%40gmail.com/private-aspecialhash/full?orderby=starttime&sortorder=descending&futureevents=true&alt=json&start-min=${datum}&max-results=1"
+}
 
 
 
