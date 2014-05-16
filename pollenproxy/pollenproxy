@@ -78,7 +78,7 @@ calendar() {
 
 #GCAL Only
 datum=`date +"%Y-%m-%d"`
-wget -qO - "https://www.google.com/calendar/feeds/yourgmailadress%40gmail.com/private-aspecialhash/full?orderby=starttime&sortorder=descending&futureevents=true&alt=json&start-min=${datum}&max-results=1"
+wget -qO - "https://www.google.com/calendar/feeds/yourgmailadress%40gmail.com/private-aspecialhash/full?orderby=starttime&sortorder=descending&futureevents=true&alt=json&start-min=${datum}"
 }
 
 

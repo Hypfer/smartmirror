@@ -70,24 +70,37 @@ jQuery(document).ready(function($) {
 	(function updateCalendarData()
 	{
 		var eventName = '';
+		var appointments = [];
 		$.getJSON('http://localhost:1336/calendar',function(data){
 			for(var i = 0; i < data.feed.entry.length; i++){
-				var theDate = new Date(data.feed.entry[i].gd$when[0].startTime);
 
-				var now = new Date();
-				var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-				var days = moment(theDate).diff(moment(today), 'days');
-				if(days == 0) {
-					daystext="Heute";
-				}
-				else if(days == 1){
-					daystext="Morgen";          
-				}
-				else {
-					daystext="In "+days+" Tagen";
-				}	
-				eventName += data.feed.entry[i].title.$t+" | "+daystext;
+				appointments.push([data.feed.entry[i].title.$t,data.feed.entry[i].gd$when[0].startTime]);
 			}
+			appointments.sort(function(x, y){
+				var now = new Date();
+     				var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+				var ydiff = moment(y[1]).diff(moment(today), 'days')
+      				var xdiff = moment(x[1]).diff(moment(today), 'days');
+      				return xdiff - ydiff;
+  			})
+
+
+			var theDate = new Date(appointments[0][1]);
+			var now = new Date();
+			var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+			var days = moment(theDate).diff(moment(today), 'days');
+			if(days == 0) {
+				daystext="Heute";
+			}
+			else if(days == 1){
+				daystext="Morgen";          
+			}
+			else {
+				daystext="In "+days+" Tagen";
+			}	
+			eventName = appointments[0][0]+" | "+daystext;
+
+
 			$('#nextAppointment').html(eventName);
 			});
 		
