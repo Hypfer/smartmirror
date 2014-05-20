@@ -99,6 +99,16 @@ jQuery(document).ready(function($) {
 				daystext="In "+days+" Tagen";
 			}	
 			eventName = appointments[0][0]+" | "+daystext;
+			for(var i = 1; i < appointments.length; i++) {
+
+				var oneDate = new Date(appointments[i][1]);
+				var days_in_the_loop = moment(oneDate).diff(moment(today), 'days');
+				if (days_in_the_loop == days) {
+					eventName += "<br/>"+appointments[i][0]+" | "+daystext;
+				}
+
+
+			}
 
 
 			$('#nextAppointment').html(eventName);
