@@ -252,6 +252,14 @@ jQuery(document).ready(function($) {
 			else {
 				$( "#rain" ).remove();
 			}
+			if(json.list[0].weather[0].main == "Thunderstorm"){
+				if ($("#thunderstorm").length <= 0){
+					$( ".notifications" ).append( '<img src="font/thunderstorm.svg" id="thunderstorm">' );
+				}
+			}
+			else {
+				$( "#thunderstorm" ).remove();
+			}
 
 		});
 
