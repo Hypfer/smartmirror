@@ -39,9 +39,10 @@ function kmh2beaufort(kmh)
 jQuery(document).ready(function($) {
 
 	var weatherParams = {
-		'q':'Hameln,Germany',
+		//'q':'Hameln,Germany',
+		'id':'2911271',
 		'units':'metric',
-		'lang':'de'
+		//'lang':'de'
 	};
 	
 	(function updateTime()
@@ -243,7 +244,7 @@ jQuery(document).ready(function($) {
 	(function updateDailyForecast()
 	{
 			$.getJSON('http://api.openweathermap.org/data/2.5/forecast/daily', weatherParams, function(json, textStatus) {
-
+			//console.log(json.list[0].weather[0].main);
 			if(json.list[0].weather[0].main == "Rain"){
 				if ($("#rain").length <= 0){
 					$( ".notifications" ).append( '<img src="font/rain.svg" id="rain">' );
