@@ -170,6 +170,25 @@ jQuery(document).ready(function($) {
 				$( "#glaette" ).remove();
 			}
 
+			//combine stuff
+			if(json.weather[0].main == "Rain"){
+				if ($("#rain").length <= 0){
+					$( ".notifications" ).append( '<img src="font/rain.svg" id="rain">' );
+				}
+			}
+			else {
+				$( "#rain" ).remove();
+			}
+			if(json.weather[0].main == "Thunderstorm"){
+				if ($("#thunderstorm").length <= 0){
+					$( ".notifications" ).append( '<img src="font/thunderstorm.svg" id="thunderstorm">' );
+				}
+			}
+			else {
+				$( "#thunderstorm" ).remove();
+			}
+
+
 			// var forecast = 'Min: '+temp_min+'&deg;, Max: '+temp_max+'&deg;';
 			// $('.forecast').updateWithText(forecast, 1000);
 
@@ -239,33 +258,6 @@ jQuery(document).ready(function($) {
 
 		setTimeout(function() {
 			updateWeatherForecast();
-		}, 300000);
-	})();
-	(function updateCurrentWeather()
-	{
-			$.getJSON('http://api.openweathermap.org/data/2.5/weather', weatherParams, function(json, textStatus) {
-			//console.log(json.weather[0].main);
-			if(json.weather[0].main == "Rain"){
-				if ($("#rain").length <= 0){
-					$( ".notifications" ).append( '<img src="font/rain.svg" id="rain">' );
-				}
-			}
-			else {
-				$( "#rain" ).remove();
-			}
-			if(json.weather[0].main == "Thunderstorm"){
-				if ($("#thunderstorm").length <= 0){
-					$( ".notifications" ).append( '<img src="font/thunderstorm.svg" id="thunderstorm">' );
-				}
-			}
-			else {
-				$( "#thunderstorm" ).remove();
-			}
-
-		});
-
-		setTimeout(function() {
-			updateCurrentWeather();
 		}, 300000);
 	})();
 	(function updateMoney()
