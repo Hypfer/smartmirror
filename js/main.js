@@ -241,11 +241,11 @@ jQuery(document).ready(function($) {
 			updateWeatherForecast();
 		}, 300000);
 	})();
-	(function updateDailyForecast()
+	(function updateCurrentWeather()
 	{
-			$.getJSON('http://api.openweathermap.org/data/2.5/forecast/daily', weatherParams, function(json, textStatus) {
-			//console.log(json.list[0].weather[0].main);
-			if(json.list[0].weather[0].main == "Rain"){
+			$.getJSON('http://api.openweathermap.org/data/2.5/weather', weatherParams, function(json, textStatus) {
+			//console.log(json.weather[0].main);
+			if(json.weather[0].main == "Rain"){
 				if ($("#rain").length <= 0){
 					$( ".notifications" ).append( '<img src="font/rain.svg" id="rain">' );
 				}
@@ -253,7 +253,7 @@ jQuery(document).ready(function($) {
 			else {
 				$( "#rain" ).remove();
 			}
-			if(json.list[0].weather[0].main == "Thunderstorm"){
+			if(json.weather[0].main == "Thunderstorm"){
 				if ($("#thunderstorm").length <= 0){
 					$( ".notifications" ).append( '<img src="font/thunderstorm.svg" id="thunderstorm">' );
 				}
@@ -265,7 +265,7 @@ jQuery(document).ready(function($) {
 		});
 
 		setTimeout(function() {
-			updateDailyForecast();
+			updateCurrentWeather();
 		}, 300000);
 	})();
 	(function updateMoney()
