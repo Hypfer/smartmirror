@@ -47,8 +47,8 @@ jQuery(document).ready(function($) {
 	
 	(function updateTime()
 	{
-		var days = ['sonntag','montag','dienstag','mittwoch','donnerstag','freitag','samstag'];
-		var months = ['januar','februar','maerz','april','mai','juni','juli','august','september','oktober','november','dezember'];
+		var days = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+		var months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 
 		var now = new Date();
 
