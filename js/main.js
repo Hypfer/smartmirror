@@ -161,6 +161,18 @@ jQuery(document).ready(function($) {
 
 			var iconClass = iconTable[json.weather[0].icon];
 			var icon = $('<span/>').addClass('icon').addClass('wi').addClass(iconClass);
+			//TODO: Abstufungen?
+			if(parseFloat(temp) >= 28) {
+				$('.temp').css('color', "red")
+			}
+			else if (parseFloat(temp) <= 9) {
+				$('.temp').css('color', "blue")
+			}
+			else {
+				$('.temp').css('color', "#fff")
+			}
+
+
 			$('.temp').updateWithText(icon.outerHTML()+temp+'&deg;', 1000);
 			if(parseFloat(temp) <= 4) {
 				if ($("#glaette").length <= 0){
