@@ -22,6 +22,8 @@ http://thenounproject.com/term/storm/4822/
 
 http://thenounproject.com/term/sunscreen/1228/
 
+http://thenounproject.com/term/thermometer/20544/
+
 
 
 IPTables Rules included

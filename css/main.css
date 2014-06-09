@@ -192,6 +192,15 @@
 	width: 100px;
 
 }
+.thermo {
+	float: left;
+	position:relative;
+	display: block;
+	width: 200px;
+	opacity: 0.0;
+
+}
+
 
 
 
