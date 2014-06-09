@@ -527,7 +527,7 @@ jQuery(document).ready(function($) {
 		}
 		setTimeout(function() {
 			updateCurrentWeather();
-		}, 600000); // 10 min
+		}, 1200000); // 20 min
 	})();
 
 	(function Diverses()
@@ -551,6 +551,62 @@ jQuery(document).ready(function($) {
 		}
 		else {
 			$( "#graeser" ).remove();
+		}
+		});
+		$.get( "http://localhost:1336/uvindex", function( data ) {
+			if(data != 0) {
+				sunscreenneeded = 0;
+				opacity = 0;
+				switch (data) {
+					case "0":
+						break;
+					case "1":
+						break;
+					case "2":
+						break;
+					case "3":
+						break;
+					case "4":
+						break;
+					case "5":
+						break;
+					case "6":
+						opacity = 0.8;
+						sunscreenneeded = 1;
+						color = "red";
+						break;
+					case "7":
+						opacity = 0.8;
+						sunscreenneeded = 1;
+						break;
+					case "8":
+						opacity = 1;
+						sunscreenneeded = 1;
+						break;
+					case "9":
+						opacity = 1;
+						sunscreenneeded = 1;
+						break;
+					case "10":
+						opacity = 1;
+						sunscreenneeded = 1;
+						break;
+					default:
+						sunscreenneeded = 1;
+						opacity = 1;
+				}
+		
+
+				if (sunscreenneeded == 1) {
+					if ($("#sunscreen").length <= 0){
+						$( ".notifications" ).append( '<img src="font/sunscreen.svg" id="sunscreen" style="opacity: '+ opacity + '">' );
+					}
+				} else {
+					$( "#sunscreen" ).remove();
+				}
+		}
+		else {
+			$( "#sunscreen" ).remove();
 		}
 		});
 

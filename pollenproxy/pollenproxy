@@ -30,6 +30,9 @@ case  "$request"  in
         "/weatheralerts")
         weatheralerts
         ;;
+        "/uvindex")
+        uvindex
+        ;;
 
 esac
 }
@@ -146,6 +149,11 @@ jsonresult+="]}"
 echo -e "$jsonresult"
 }
 
+uvindex() {
+#this is terrible
+result=`wget -qO - http://www.weatheronline.de/Niedersachsen/Hameln/UVIndex.htm | grep '<td height="38">' | head -n1 | cut -d">" -f3 | cut -d"<" -f1 | tr -d ' '`
+echo -n "$result"
+}
 
 
 
