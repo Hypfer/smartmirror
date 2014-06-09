@@ -4,6 +4,10 @@ smartmirror
 This is a fork of MagicMirror which aims to be used without a webserver.
 Also, it's in german.
 
+Weather Warnings from dwd.de
+Weather Info from openweathermap.org
+
+
 Icons taken from
 
 http://thenounproject.com/term/agriculture/4221/
@@ -15,6 +19,9 @@ http://thenounproject.com/term/snowflake/30004/
 http://thenounproject.com/term/umbrella/9933/
 
 http://thenounproject.com/term/storm/4822/
+
+http://thenounproject.com/term/sunscreen/1228/
+
 
 
 IPTables Rules included

@@ -27,6 +27,10 @@ case  "$request"  in
 		"/calendar")
 		calendar
 		;;
+        "/weatheralerts")
+        weatheralerts
+        ;;
+
 esac
 }
 graeser() {
@@ -80,7 +84,67 @@ calendar() {
 datum=`date +"%Y-%m-%d"`
 wget -qO - "https://www.google.com/calendar/feeds/yourgmailadress%40gmail.com/private-aspecialhash/full?orderby=starttime&sortorder=descending&futureevents=true&alt=json&start-min=${datum}"
 }
+read_dom () {
+    local IFS=\>
+    read -d \< ENTITY CONTENT
+    local ret=$?
+    TAG_NAME=${ENTITY%% *}
+    ATTRIBUTES=${ENTITY#* }
+    return $ret
+}
+weatheralerts() {
+#http://kunden.dwd.de/gdsRegistration/gdsRegistrationStart.do <-- for an ftp account.
+#HMXX is the ID of "Hameln-Pyrmont"
+#https://werdis.dwd.de/infos/legend_warnings_CAP.pdf documentation for the values
+warnurls=`wget -qO - ftp://user:password@ftp-outgoing2.dwd.de/gds/specials/warnings/xml/HA/ | grep "HMXX" | grep -o '<a .*href=.*>' | sed -e 's/<a /\n<a /g' | sed -e 's/<a .*href=['"'"'"]//' -e 's/["'"'"'].*$//' -e '/^$/ d'`
+#warnurls=`echo "$warnurls" | sed -n '1!G;h;$p' `
+first="1"
+jsonresult='{"events":['
+while read -r line; do
+	weatherxml=`wget -qO - $line`
 
+	valuecount="0"
+	if [ $first != "1" ]; then
+		jsonresult+=',{'
+	else
+		jsonresult+='{'
+		first="0"
+	fi	
+	while read_dom; do
+
+		case $ENTITY in
+		"msgType")
+		type="$CONTENT"
+		;;
+		"urgency")
+		urgency="$CONTENT"
+		;;
+		"severity")
+		severity="$CONTENT"
+		;;
+		"value")
+		if [ $valuecount == "0" ]; then
+			id="$CONTENT"
+			valuecount="1"
+		fi
+		;;
+		"effective")
+		effective="$CONTENT"
+		;;
+		"onset")
+		onset="$CONTENT"
+		;;
+		"expires")
+		expires="$CONTENT"
+		;;
+		esac
+	done <<< "$weatherxml"
+	jsonresult+="\"type\":\"${type}\",\"severity\":\"${severity}\",\"urgency\":\"${urgency}\",\"id\":\"${id}\",\"effective\":\"${effective}\",\"onset\":\"${onset}\",\"expires\":\"${expires}\""
+	jsonresult+='}'
+done <<< "$warnurls"
+jsonresult+="]}"
+echo -e "$jsonresult"
+}
 
 
 
