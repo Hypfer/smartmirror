@@ -148,11 +148,7 @@ jQuery(document).ready(function($) {
 			'13n':'wi-night-snow',
 			'50n':'wi-night-alt-cloudy-windy'		
 		}
-		
 
-		$.ajaxSetup({
-		async: false
-		});
 		//defining warning notifications
 		rain = 0;
 		thunderstorm = 0;
@@ -161,8 +157,13 @@ jQuery(document).ready(function($) {
 		fog = 0;
 		ice = 0;
 
-
-		$.getJSON('http://api.openweathermap.org/data/2.5/weather', weatherParams, function(json, textStatus) {
+		$.ajax({  
+  		url: 'http://api.openweathermap.org/data/2.5/weather',  
+  		dataType: 'json',  
+  		data: weatherParams,  
+  		async: false,  
+  		success: function(json){  
+	
 
 			var temp = roundVal(json.main.temp);
 			var temp_min = roundVal(json.main.temp_min);
@@ -230,9 +231,14 @@ jQuery(document).ready(function($) {
 			}
 
 			$('.windsun').updateWithText(windString+' '+sunString, 1000);
+		}
 		});
-		
-		$.getJSON('http://localhost:1336/weatheralerts',function(data){
+
+		$.ajax({  
+  		url: 'http://localhost:1336/weatheralerts',  
+  		dataType: 'json',  
+  		async: false,  
+  		success: function(data){
 			for (var i in data.events) {
 				//console.log(data.events[i].expires);
 				var expires = new Date(data.events[i].expires);
@@ -469,6 +475,7 @@ jQuery(document).ready(function($) {
 					}
 				}
 			}
+		}
 		});
 		
 		if (rain == 1) {
@@ -518,10 +525,6 @@ jQuery(document).ready(function($) {
 		} else {
 				$( "#ice" ).remove();
 		}
-
-		$.ajaxSetup({
-		async: true
-		});
 		setTimeout(function() {
 			updateCurrentWeather();
 		}, 600000); // 10 min
