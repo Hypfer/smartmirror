@@ -560,7 +560,7 @@ jQuery(document).ready(function($) {
 
 		setTimeout(function() {
 		Diverses();
-		}, 600000); //10 min
+		}, 3600000); //60 min
 
 	})();		
 	
