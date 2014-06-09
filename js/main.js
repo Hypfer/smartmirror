@@ -72,7 +72,7 @@ jQuery(document).ready(function($) {
 	{
 		var eventName = '';
 		var appointments = [];
-		$.getJSON('http://smartmirror-7:1336/calendar',function(data){
+		$.getJSON('http://localhost:1336/calendar',function(data){
 			for(var i = 0; i < data.feed.entry.length; i++){
 
 				appointments.push([data.feed.entry[i].title.$t,data.feed.entry[i].gd$when[0].startTime]);
@@ -279,7 +279,7 @@ jQuery(document).ready(function($) {
 	{
 	
 		
-		$.get( "http://smartmirror-7:1336/banking", function( data ) {
+		$.get( "http://localhost:1336/banking", function( data ) {
 			$( "#Kontostand" ).html(data + ' &euro;');
 		});
 
@@ -289,7 +289,7 @@ jQuery(document).ready(function($) {
 	})();
 	(function updatePollen()
 	{
-		$.get( "http://smartmirror-7:1336/roggen", function( data ) {
+		$.get( "http://localhost:1336/roggen", function( data ) {
 		if(data != 0) {
 			if ($("#roggen").length <= 0){
 				$( ".notifications" ).append( '<img src="font/roggen.svg" id="roggen" style="opacity: '+ data + ';">' );
@@ -299,7 +299,7 @@ jQuery(document).ready(function($) {
 			$( "#roggen" ).remove();
 		}
 		});
-		$.get( "http://smartmirror-7:1336/graeser", function( data ) {
+		$.get( "http://localhost:1336/graeser", function( data ) {
 		if(data != 0) {
 			if ($("#graeser").length <= 0){
 				$( ".notifications" ).append( '<img src="font/graeser.svg" id="graeser" style="opacity: '+ data + ';">' );
@@ -315,7 +315,7 @@ jQuery(document).ready(function($) {
 	(function updateWeatherAlerts()
 	{
 
-		$.getJSON('http://smartmirror-7:1336/weatheralerts',function(data){
+		$.getJSON('http://localhost:1336/weatheralerts',function(data){
 			for (var i in data.events) {
 				//console.log(data.events[i].expires);
 				var expires = new Date(data.events[i].expires);
