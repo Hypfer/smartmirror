@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   width="100"
+   height="100"
+   viewBox="0 0 100 100"
+   enable-background="new 0 0 100 90.907"
+   xml:space="preserve"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="fog.svg"><metadata
+   id="metadata15"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs13" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1007"
+   id="namedview11"
+   showgrid="false"
+   inkscape:zoom="2.5960598"
+   inkscape:cx="50.770398"
+   inkscape:cy="45.453499"
+   inkscape:window-x="0"
+   inkscape:window-y="25"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1" />
+<path
+   d="M 95.454,77.197613 H 4.546 c -2.509,0 -4.546,-2.035 -4.546,-4.546 0,-2.51 2.037,-4.546 4.546,-4.546 h 90.908 c 2.509,0 4.546,2.036 4.546,4.546 0,2.509 -2.034,4.546 -4.546,4.546 z"
+   id="path3"
+   inkscape:connector-curvature="0"
+   style="fill:#ffffff" />
+<path
+   d="M 95.454,59.013613 H 4.546 c -2.509,0 -4.546,-2.033 -4.546,-4.545 0,-2.508 2.037,-4.546 4.546,-4.546 h 90.908 c 2.509,0 4.546,2.038 4.546,4.546 0,2.512 -2.034,4.545 -4.546,4.545 z"
+   id="path5"
+   inkscape:connector-curvature="0"
+   style="fill:#ffffff" />
+<path
+   d="m 72.726,31.743613 c -3.638,0 -7.007,1.091 -9.849,2.935 -2.8,-12.085 -13.579,-21.119 -26.514,-21.119 -15.061,0 -27.271,12.213 -27.271,27.276 H 0 c 0,-20.081 16.282,-36.3650001 36.363,-36.3650001 13.647,0 25.524,7.5280001 31.742,18.6470001 1.51,-0.257 3.039,-0.466 4.621,-0.466 11.869,0 21.938,7.596 25.687,18.184 h -9.957 c -3.146,-5.432 -9.003,-9.092 -15.73,-9.092 z"
+   id="path7"
+   inkscape:connector-curvature="0"
+   style="fill:#ffffff" />
+<path
+   d="m 4.546,86.285613 h 90.908 c 2.509,0 4.546,2.038 4.546,4.546 0,2.513 -2.037,4.545997 -4.546,4.545997 H 4.546 C 2.037,95.37761 0,93.344613 0,90.831613 c 0,-2.508 2.034,-4.546 4.546,-4.546 z"
+   id="path9"
+   inkscape:connector-curvature="0"
+   style="fill:#ffffff" />
+</svg>

@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
 
 		setTimeout(function() {
 			updateTime();
-		}, 1000);
+		}, 1000); // 1sec
 	})();
 
 	(function updateCalendarData()
@@ -117,7 +117,7 @@ jQuery(document).ready(function($) {
 		
         	setTimeout(function() {
         		updateCalendarData();
-        	}, 300000);
+        	}, 600000); //10 Min
 
 	})();
 
@@ -149,8 +149,19 @@ jQuery(document).ready(function($) {
 			'50n':'wi-night-alt-cloudy-windy'		
 		}
 		
-		//TODO: Bei großer Hitze/Kälte das Icon Rot/Blau einfärben
-		//TODO: Die Temperaturvorhersage irgendwie ins Design integrieren
+
+		$.ajaxSetup({
+		async: false
+		});
+		//defining warning notifications
+		rain = 0;
+		thunderstorm = 0;
+		wind = 0;
+		snowfall = 0;
+		fog = 0;
+		ice = 0;
+
+
 		$.getJSON('http://api.openweathermap.org/data/2.5/weather', weatherParams, function(json, textStatus) {
 
 			var temp = roundVal(json.main.temp);
@@ -176,31 +187,32 @@ jQuery(document).ready(function($) {
 
 
 			$('.temp').updateWithText(icon.outerHTML()+temp+'&deg;', 1000);
-			if(parseFloat(temp) <= 4) {
-				if ($("#glaette").length <= 0){
-					$( ".notifications" ).append( '<img src="font/snowflake.svg" id="glaette">' );
-				}
-			}
-			else {
-				$( "#glaette" ).remove();
-			}
+			//if(parseFloat(temp) <= 4) {
+			//	ice = 1;
+			//}
 
 			//combine stuff
-			if(json.weather[0].main == "Rain"){
-				if ($("#rain").length <= 0){
-					$( ".notifications" ).append( '<img src="font/rain.svg" id="rain">' );
-				}
-			}
-			else {
-				$( "#rain" ).remove();
-			}
-			if(json.weather[0].main == "Thunderstorm"){
-				if ($("#thunderstorm").length <= 0){
-					$( ".notifications" ).append( '<img src="font/thunderstorm.svg" id="thunderstorm">' );
-				}
-			}
-			else {
-				$( "#thunderstorm" ).remove();
+
+			switch (json.weather[0].main) {
+				case "Rain":
+					rain = 1;
+					break;
+				case "Snow":
+					snowfall = 1;
+					break;
+				case "Thunderstorm":
+					thunderstorm = 1;
+					break;
+				case "Atmosphere":
+					fog = 1;
+					break;
+				case "Drizzle":
+					rain = 1;
+					break;
+				case "Clouds":
+					break;
+				default:
+					//console.log("Unhandled Weather State:"+json.weather[0].main);
 			}
 
 
@@ -219,75 +231,303 @@ jQuery(document).ready(function($) {
 
 			$('.windsun').updateWithText(windString+' '+sunString, 1000);
 		});
+		
+		$.getJSON('http://localhost:1336/weatheralerts',function(data){
+			for (var i in data.events) {
+				//console.log(data.events[i].expires);
+				var expires = new Date(data.events[i].expires);
+				var now = new Date();
+				//console.log(now);
+				var diff = moment(expires).diff(moment(now), 'seconds');
+				//console.log(diff);
+				if (diff < 0) {
+					//console.log("Abgelaufen")
+				}
+				else {
+					switch (data.events[i].id) {
+						case "31":
+							//console.log("Gewitter");
+							thunderstorm = 1;
+							break;
+						case "33":
+							//console.log("Gewitter");
+							thunderstorm = 1;
+							break;
+						case "34":
+							//console.log("Gewitter");
+							thunderstorm = 1;
+							break;
+						case "36":
+							//console.log("Gewitter");
+							thunderstorm = 1;
+							break;
+						case "38":
+							//console.log("Gewitter");
+							thunderstorm = 1;
+							break;
+						case "40":
+							//console.log("Schweres Gewitter");
+							thunderstorm = 1;
+							break;
+						case "42":
+							//console.log("Schweres Gewitter");
+							thunderstorm = 1;
+							break;
+						case "44":
+							//console.log("Schweres Gewitter");
+							thunderstorm = 1;
+							break;
+						case "46":
+							//console.log("Schweres Gewitter");
+							thunderstorm = 1;
+							break;
+						case "48":
+							//console.log("Schweres Gewitter");
+							thunderstorm = 1;
+							break;
+						case "41":
+							//console.log("Schweres Gewitter mit extremen Orkanböen");
+							thunderstorm = 1;
+							wind = 1;
+							break;
+						case "45":
+							//console.log("Schweres Gewitter mit extremen Orkanböen");
+							thunderstorm = 1;
+							wind = 1;
+							break;
+						case "49":
+							//console.log("Schweres Gewitter mit extremen Orkanböen");
+							thunderstorm = 1;
+							wind = 1;
+							break;
+						case "51":
+							//console.log("Windböen");
+							wind = 1;
+							break;
+						case "52":
+							//console.log("Sturmböen");
+							wind = 1;
+							break;
+						case "53":
+							//console.log("Schwere Sturmböen");
+							wind = 1;
+							break;
+						case "54":
+							//console.log("Orkanartige Böen");
+							wind = 1;
+							break;
+						case "55":
+							//console.log("Orkanböen");
+							wind = 1;
+							break;
+						case "56":
+							//console.log("Extreme Orkanböen");
+							wind = 1;
+							break;
+						case "57":
+							//console.log("Starkwind");
+							wind = 1;
+							break;
+						case "58":
+							//console.log("Sturm");
+							wind = 1;
+							break;
+						case "59":
+							//console.log("Nebel");
+							fog = 1;
+							break;
+						case "61":
+							//console.log("Starkregen");
+							rain = 1;
+							break;
+						case "62":
+							//console.log("Heftiger Starkregen");
+							rain = 1;
+							break;
+						case "63":
+							//console.log("Dauerregen");
+							rain = 1;
+							break;
+						case "64":
+							//console.log("Ergiebiger Dauerregen");
+							rain = 1;
+							break;
+						case "65":
+							//console.log("Extrem Ergiebiger Dauerregen");
+							rain = 1;
+							break;
+						case "66":
+							//console.log("Extrem Heftiger Starkregen");
+							rain = 1;
+							break;
+						case "70":
+							//console.log("Schneefall");
+							snowfall = 1;
+							break;
+						case "71":
+							//console.log("Schneefall");
+							snowfall = 1;
+							break;
+						case "72":
+							//console.log("Starker Schneefall");
+							snowfall = 1;
+							break;
+						case "73":
+							//console.log("Extrem Starker Schneefall");
+							snowfall = 1;
+							break;
+						case "74":
+							//console.log("Schneeverwehung");
+							snowfall = 1;
+							ice = 1;
+							fog = 1;
+							break;
+						case "75":
+							//console.log("Starke Schneeverwehung");
+							snowfall = 1;
+							ice = 1;
+							fog = 1;
+							break;
+						case "76":
+							//console.log("Schneeverwehung");
+							snowfall = 1;
+							ice = 1;
+							fog = 1;
+							break;
+						case "77":
+							//console.log("Starke Schneeverwehung");
+							snowfall = 1;
+							ice = 1;
+							fog = 1;
+							break;
+						case "78":
+							//console.log("Extrem Starke Schneeverwehung");
+							snowfall = 1;
+							ice = 1;
+							fog = 1;
+							break;
+						case "81":
+							//console.log("Frost");
+							ice = 1;
+							break;
+						case "82":
+							//console.log("Strenger Frost");
+							ice = 1;
+							break;
+						case "83":
+							//console.log("Glätte");
+							ice = 1;
+							break;
+						case "84":
+							//console.log("Glätte");
+							ice = 1;
+							break;
+						case "86":
+							//console.log("Glätte");
+							ice = 1;
+							break;
+						case "87":
+							//console.log("Glätte");
+							ice = 1;
+							break;
+						case "85":
+							//console.log("Glatteis");
+							ice = 1;
+							break;
+						case "88":
+							//console.log("Tauwetter");
+							ice = 1;
+							break;
+						case "89":
+							//console.log("Starkes Tauwetter");
+							ice = 1;
+							break;
+						case "94":
+							//console.log("Schweres Gewitter");
+							thunderstorm = 1;
+							break;
+						case "95":
+							//console.log("Schweres Gewitter mit extrem heftigen Starkregen");
+							thunderstorm = 1;
+							rain = 1;
+							break;
+						case "96":
+							//console.log("Schweres Gewitter mit extrem heftigen Starkregen");
+							rain = 1;
+							thunderstorm = 1;
+							break;
+						case "247":
+							//console.log("Hitze <-- Dich sollte es gar nicht geben eigentlich");
+							break;
+						default:
+							//console.log("Unhandled Warning ID");
+							//$('#nextAppointment').html("WARNING: UNHANDLED WARNING ID");
+							$('body').css('background', 'red');
 
+						//TODO: UV Strahlung http://www.dwd.de/uvindex
+
+					}
+				}
+			}
+		});
+		
+		if (rain == 1) {
+			if ($("#rain").length <= 0){
+					$( ".notifications" ).append( '<img src="font/rain.svg" id="rain">' );
+			}
+		} else {
+				$( "#rain" ).remove();
+		}
+
+		if (thunderstorm == 1) {
+			if ($("#thunderstorm").length <= 0){
+					$( ".notifications" ).append( '<img src="font/thunderstorm.svg" id="thunderstorm">' );
+			}
+		} else {
+				$( "#thunderstorm" ).remove();
+		}
+
+		if (wind == 1) {
+			if ($("#wind").length <= 0){
+					$( ".notifications" ).append( '<img src="font/wind.svg" id="wind">' );
+			}
+		} else {
+				$( "#wind" ).remove();
+		}
+
+		if (fog == 1) {
+			if ($("#fog").length <= 0){
+					$( ".notifications" ).append( '<img src="font/fog.svg" id="fog">' );
+			}
+		} else {
+				$( "#fog" ).remove();
+		}
+
+		if (snowfall == 1) {
+			if ($("#snowfall").length <= 0){
+					$( ".notifications" ).append( '<img src="font/snowfall.svg" id="fog">' );
+			}
+		} else {
+				$( "#snowfall" ).remove();
+		}
+
+		if (ice == 1) {
+			if ($("#ice").length <= 0){
+					$( ".notifications" ).append( '<img src="font/ice.svg" id="ice">' );
+			}
+		} else {
+				$( "#ice" ).remove();
+		}
+
+		$.ajaxSetup({
+		async: true
+		});
 		setTimeout(function() {
 			updateCurrentWeather();
-		}, 60000);
+		}, 600000); // 10 min
 	})();
 
-	(function updateWeatherForecast()
-	{
-			var dayAbbr = ['so','mo','di','mi','do','fr','sa'];	
-
-			$.getJSON('http://api.openweathermap.org/data/2.5/forecast', weatherParams, function(json, textStatus) {
-
-			var forecastData = {};
-
-			for (var i in json.list) {
-				var forecast = json.list[i];
-				var dateKey  = forecast.dt_txt.substring(0, 10);
-
-				if (forecastData[dateKey] == undefined) {
-					forecastData[dateKey] = {
-						'timestamp':forecast.dt * 1000,
-						'temp_min':forecast.main.temp,
-						'temp_max':forecast.main.temp
-					};
-				} else {
-					forecastData[dateKey]['temp_min'] = (forecast.main.temp < forecastData[dateKey]['temp_min']) ? forecast.main.temp : forecastData[dateKey]['temp_min'];
-					forecastData[dateKey]['temp_max'] = (forecast.main.temp > forecastData[dateKey]['temp_max']) ? forecast.main.temp : forecastData[dateKey]['temp_max']; 
-				}
-
-			}
-
-
-			var forecastTable = $('<table />').addClass('forecast-table');
-			var opacity = 1;
-			for (var i in forecastData) {
-				var forecast = forecastData[i];
-				var dt = new Date(forecast.timestamp);
-				var row = $('<tr />').css('opacity', opacity);
-
-				row.append($('<td/>').addClass('day').html(dayAbbr[dt.getDay()]).css('opacity', "0"));
-				row.append($('<td/>').addClass('temp-max').html(roundVal(forecast.temp_max)+"&deg;-"));
-				row.append($('<td/>').addClass('temp-min').html(roundVal(forecast.temp_min)+"&deg;"));
-
-				forecastTable.append(row);
-				opacity -= 0.155;
-				break;
-			}
-
-
-			$('.forecast').updateWithText(forecastTable, 1000);
-		});
-
-		setTimeout(function() {
-			updateWeatherForecast();
-		}, 300000);
-	})();
-	(function updateMoney()
-	{
-	
-		
-		$.get( "http://localhost:1336/banking", function( data ) {
-			$( "#Kontostand" ).html(data + ' &euro;');
-		});
-
-		setTimeout(function() {
-			updateMoney();
-		}, 300000);
-	})();
-	(function updatePollen()
+	(function Diverses()
 	{
 		$.get( "http://localhost:1336/roggen", function( data ) {
 		if(data != 0) {
@@ -299,6 +539,7 @@ jQuery(document).ready(function($) {
 			$( "#roggen" ).remove();
 		}
 		});
+
 		$.get( "http://localhost:1336/graeser", function( data ) {
 		if(data != 0) {
 			if ($("#graeser").length <= 0){
@@ -309,219 +550,17 @@ jQuery(document).ready(function($) {
 			$( "#graeser" ).remove();
 		}
 		});
-		setTimeout(function() {
-		updatePollen();
-		}, 300000);
-	(function updateWeatherAlerts()
-	{
 
-		$.getJSON('http://localhost:1336/weatheralerts',function(data){
-			for (var i in data.events) {
-				//console.log(data.events[i].expires);
-				var expires = new Date(data.events[i].expires);
-				var now = new Date();
-				//console.log(now);
-				var diff = moment(expires).diff(moment(now), 'seconds');
-				//console.log(diff);
-				if (diff < 0) {
-					console.log("Abgelaufen")
-				}
-				else {
-					switch (data.events[i].id) {
-						case "31":
-							console.log("Gewitter");
-							break;
-						case "33":
-							console.log("Gewitter");
-							break;
-						case "34":
-							console.log("Gewitter");
-							break;
-						case "36":
-							console.log("Gewitter");
-							break;
-						case "38":
-							console.log("Gewitter");
-							break;
-						case "40":
-							console.log("Schweres Gewitter");
-							break;
-						case "42":
-							console.log("Schweres Gewitter");
-							break;
-						case "44":
-							console.log("Schweres Gewitter");
-							break;
-						case "46":
-							console.log("Schweres Gewitter");
-							break;
-						case "48":
-							console.log("Schweres Gewitter");
-							break;
-						case "41":
-							console.log("Schweres Gewitter mit extremen Orkanböen");
-							break;
-						case "45":
-							console.log("Schweres Gewitter mit extremen Orkanböen");
-							break;
-						case "49":
-							console.log("Schweres Gewitter mit extremen Orkanböen");
-							break;
-						case "51":
-							console.log("Windböen");
-							break;
-						case "52":
-							console.log("Sturmböen");
-							break;
-						case "53":
-							console.log("Schwere Sturmböen");
-							break;
-						case "54":
-							console.log("Orkanartige Böen");
-							break;
-						case "55":
-							console.log("Orkanböen");
-							break;
-						case "56":
-							console.log("Extreme Orkanböen");
-							break;
-						case "57":
-							console.log("Starkwind");
-							break;
-						case "58":
-							console.log("Sturm");
-							break;
-						case "59":
-							console.log("Nebel");
-							break;
-						case "61":
-							console.log("Starkregen");
-							break;
-						case "62":
-							console.log("Heftiger Starkregen");
-							break;
-						case "63":
-							console.log("Dauerregen");
-							break;
-						case "64":
-							console.log("Ergiebiger Dauerregen");
-							break;
-						case "65":
-							console.log("Extrem Ergiebiger Dauerregen");
-							break;
-						case "66":
-							console.log("Extrem Heftiger Starkregen");
-							break;
-						case "70":
-							console.log("Schneefall");
-							break;
-						case "71":
-							console.log("Schneefall");
-							break;
-						case "72":
-							console.log("Starker Schneefall");
-							break;
-						case "73":
-							console.log("Extrem Starker Schneefall");
-							break;
-						case "74":
-							console.log("Schneeverwehung");
-							break;
-						case "75":
-							console.log("Starke Schneeverwehung");
-							break;
-						case "76":
-							console.log("Schneeverwehung");
-							break;
-						case "77":
-							console.log("Starke Schneeverwehung");
-							break;
-						case "78":
-							console.log("Extrem Starke Schneeverwehung");
-							break;
-						case "81":
-							console.log("Frost");
-							break;
-						case "82":
-							console.log("Strenger Frost");
-							break;
-						case "83":
-							console.log("Glätte");
-							break;
-						case "84":
-							console.log("Glätte");
-							break;
-						case "86":
-							console.log("Glätte");
-							break;
-						case "87":
-							console.log("Glätte");
-							break;
-						case "85":
-							console.log("Glatteis");
-							break;
-						case "88":
-							console.log("Tauwetter");
-							break;
-						case "89":
-							console.log("Starkes Tauwetter");
-							break;
-						case "94":
-							console.log("Schweres Gewitter");
-							break;
-						case "95":
-							console.log("Schweres Gewitter mit extrem heftigen Starkregen");
-							break;
-						case "96":
-							console.log("Schweres Gewitter mit extrem heftigen Starkregen");
-							break;
-						case "96":
-							console.log("Hitze <-- Dich sollte es gar nicht geben eigentlich");
-							break;
-						default:
-							console.log("Unhandled Warning ID");
-							//$('#nextAppointment').html("WARNING: UNHANDLED WARNING ID");
-							$('body').css('background', 'red');
-						//TODO: Icons, Handling Usw
-						//TODO: UV Strahlung http://www.dwd.de/uvindex
-
-					}
-				}
-			}
+		$.get( "http://localhost:1336/banking", function( data ) {
+			$( "#Kontostand" ).html(data + ' &euro;');
 		});
-			/*
-			if(days == 0) {
-				daystext="Heute";
-			}
-			else if(days == 1){
-				daystext="Morgen";          
-			}
-			else {
-				daystext="In "+days+" Tagen";
-			}	
-			eventName = appointments[0][0]+" | "+daystext;
-			for(var i = 1; i < appointments.length; i++) {
 
-				var oneDate = new Date(appointments[i][1]);
-				var days_in_the_loop = moment(oneDate).diff(moment(today), 'days');
-				if (days_in_the_loop == days) {
-					eventName += "<br/>"+appointments[i][0]+" | "+daystext;
-				}
-
-
-			}
-
-
-			$('#nextAppointment').html(eventName);
-			*/
-		
-        	setTimeout(function() {
-        		updateWeatherAlerts();
-        	}, 600000);
+		setTimeout(function() {
+		Diverses();
+		}, 600000); //10 min
 
 	})();		
 	
 	
-	})();
 
 });

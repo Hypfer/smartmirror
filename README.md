@@ -18,11 +18,17 @@ http://thenounproject.com/term/snowflake/30004/
 
 http://thenounproject.com/term/umbrella/9933/
 
-http://thenounproject.com/term/storm/4822/
+http://thenounproject.com/term/thunderstorm/8712/
 
 http://thenounproject.com/term/sunscreen/1228/
 
 http://thenounproject.com/term/thermometer/20544/
+
+http://thenounproject.com/term/wind/4252/
+
+http://thenounproject.com/term/snow/20951/
+
+http://thenounproject.com/term/fog/2605/
 
 
 
@@ -49,7 +55,6 @@ Add Pin to Pinfile
 Done
 
 
-Todo: Forecast
 
 
 For more information on the source project, visit:
