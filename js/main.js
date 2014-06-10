@@ -148,6 +148,14 @@ jQuery(document).ready(function($) {
 			'13n':'wi-night-snow',
 			'50n':'wi-night-alt-cloudy-windy'		
 		}
+		$.getJSON('http://api.openweathermap.org/data/2.5/forecast/daily', weatherParams, function(json) {
+			var temp_min = roundVal(json.list[0].temp.min);
+			var temp_max = roundVal(json.list[0].temp.max);
+			$('#temphightspan').html(temp_max+'&deg;');
+			$('#templowtspan').html(temp_min+'&deg;');
+			$('.thermo').css('opacity', "1.0");
+		});
+
 
 		//defining warning notifications
 		rain = 0;
@@ -166,11 +174,6 @@ jQuery(document).ready(function($) {
 	
 
 			var temp = roundVal(json.main.temp);
-			var temp_min = roundVal(json.main.temp_min);
-			var temp_max = roundVal(json.main.temp_max);
-			$('#temphightspan').html(temp_max+'&deg;');
-			$('#templowtspan').html(temp_min+'&deg;');
-			$('.thermo').css('opacity', "1.0");
 			var wind = roundVal(json.wind.speed);
 
 			var iconClass = iconTable[json.weather[0].icon];
@@ -469,8 +472,6 @@ jQuery(document).ready(function($) {
 							//console.log("Unhandled Warning ID");
 							//$('#nextAppointment').html("WARNING: UNHANDLED WARNING ID");
 							$('body').css('background', 'red');
-
-						//TODO: UV Strahlung http://www.dwd.de/uvindex
 
 					}
 				}
