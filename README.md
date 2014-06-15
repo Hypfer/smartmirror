@@ -1,6 +1,9 @@
 smartmirror
 ===========
 
+![alt tag](https://raw2.github.com/Hypfer/smartmirror/master/demo.png)
+
+
 This is a fork of MagicMirror which aims to be used without a webserver.
 Also, it's in german.
 
