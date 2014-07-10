@@ -85,27 +85,34 @@ jQuery(document).ready(function($) {
       				return xdiff - ydiff;
   			})
 
-
+			var daystime = "";
 			var theDate = new Date(appointments[0][1]);
 			var now = new Date();
 			var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 			var days = moment(theDate).diff(moment(today), 'days');
 			if(days == 0) {
 				daystext="Heute";
+				daystime=", "+theDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
 			}
 			else if(days == 1){
-				daystext="Morgen";          
+				daystext="Morgen";
+				daystime=", "+theDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});          
 			}
 			else {
 				daystext="In "+days+" Tagen";
 			}	
-			eventName = appointments[0][0]+" | "+daystext;
+			eventName = appointments[0][0]+" | "+daystext+daystime;
 			for(var i = 1; i < appointments.length; i++) {
-
+				daystime = "";
 				var oneDate = new Date(appointments[i][1]);
 				var days_in_the_loop = moment(oneDate).diff(moment(today), 'days');
 				if (days_in_the_loop == days) {
-					eventName += "<br/>"+appointments[i][0]+" | "+daystext;
+					if( days == 1 || days == 0)
+						{
+							daystime=", "+oneDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});	
+						}
+
+					eventName += "<br/>"+appointments[i][0]+" | "+daystext+daystime;
 				}
 
 
