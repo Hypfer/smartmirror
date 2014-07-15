@@ -92,11 +92,11 @@ jQuery(document).ready(function($) {
 			var days = moment(theDate).diff(moment(today), 'days');
 			if(days == 0) {
 				daystext="Heute";
-				daystime=", "+theDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+				daystime=", "+theDate.toLocaleTimeString("de-DE", {hour: '2-digit', minute:'2-digit'});
 			}
 			else if(days == 1){
 				daystext="Morgen";
-				daystime=", "+theDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});          
+				daystime=", "+theDate.toLocaleTimeString("de-DE", {hour: '2-digit', minute:'2-digit'});          
 			}
 			else {
 				daystext="In "+days+" Tagen";
@@ -109,7 +109,7 @@ jQuery(document).ready(function($) {
 				if (days_in_the_loop == days) {
 					if( days == 1 || days == 0)
 						{
-							daystime=", "+oneDate.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});	
+							daystime=", "+oneDate.toLocaleTimeString("de-DE", {hour: '2-digit', minute:'2-digit'});	
 						}
 
 					eventName += "<br/>"+appointments[i][0]+" | "+daystext+daystime;
