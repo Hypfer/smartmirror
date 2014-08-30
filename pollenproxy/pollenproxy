@@ -98,6 +98,8 @@ read_dom () {
 weatheralerts() {
 #http://kunden.dwd.de/gdsRegistration/gdsRegistrationStart.do <-- for an ftp account.
 #HMXX is the ID of "Hameln-Pyrmont"
+#ftp://ftp-outgoing2.dwd.de/gds/specials/warnings/legend_warnings.pdf 
+#ID for City/Region Page 9ff.
 #https://werdis.dwd.de/infos/legend_warnings_CAP.pdf documentation for the values
 warnurls=`wget -qO - ftp://user:password@ftp-outgoing2.dwd.de/gds/specials/warnings/xml/HA/ | grep "HMXX" | grep -o '<a .*href=.*>' | sed -e 's/<a /\n<a /g' | sed -e 's/<a .*href=['"'"'"]//' -e 's/["'"'"'].*$//' -e '/^$/ d'`
 #warnurls=`echo "$warnurls" | sed -n '1!G;h;$p' `
