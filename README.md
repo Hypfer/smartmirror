@@ -7,6 +7,10 @@ smartmirror
 This is a fork of MagicMirror which aims to be used without a webserver.
 Also, it's in german.
 
+
+If you like my fork consider buying me something from my amazon wishlist
+http://www.amazon.de/gp/registry/wishlist/6A82Q6JQNDVG
+
 Weather Warnings from dwd.de
 Weather Info from openweathermap.org
 
@@ -56,7 +60,6 @@ aqhbci-tool4 mkpinlist -o /path/to/pinfile
 Add Pin to Pinfile
 
 Done
-
 
 
 
