@@ -266,7 +266,28 @@ jQuery(document).ready(function($) {
 						//console.log("Abgelaufen")
 					}
 					else {
+					//TODO: Add all Codes ftp://ftp-outgoing2.dwd.de/gds/specials/warnings/legend_warnings.pdf
 						switch (data.events[i].id) {
+							case "21":
+								//console.log("Frost");
+								ice = 1;
+								break;
+							case "22":
+								//console.log("Frost");
+								ice = 1;
+								break;
+							case "23":
+								//console.log("Frost");
+								ice = 1;
+								break;
+							case "24":
+								//console.log("Frost");
+								ice = 1;
+								break;
+							case "25":
+								//console.log("Frost");
+								ice = 1;
+								break;
 							case "31":
 								//console.log("Gewitter");
 								thunderstorm = 1;
