@@ -43,6 +43,7 @@ jQuery(document).ready(function($) {
 		'id':'2911271',
 		'units':'metric',
 		//'lang':'de'
+		'APPID': '' //openweathermap.org api Key here. Create an account to get one.
 	};
 	
 	(function updateTime()
